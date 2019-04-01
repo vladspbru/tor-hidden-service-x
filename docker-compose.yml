@@ -18,7 +18,8 @@ services:
         HELLO_PORTS: 88:80
         # hello and again will share the same onion_adress
         HELLO_SERVICE_NAME: foo
-
+        
+        STEALTH: 1
         HOLE: 1 
 
     # Keep keys in volumes

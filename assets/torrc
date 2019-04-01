@@ -10,7 +10,9 @@ HiddenServicePort {{port.port_from}} {{service.host}}:{{port.dest}}
 {% endif %}
 {% endfor %}
 {% endfor %}
+{% if 'STEALTH' in env %}
 HiddenServiceAuthorizeClient stealth {{service_group.name}}_cli
+{% endif %}
 {% endfor %}
 
 {% if 'RELAY' in env %}
