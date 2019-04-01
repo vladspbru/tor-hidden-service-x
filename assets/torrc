@@ -10,7 +10,7 @@ HiddenServicePort {{port.port_from}} {{service.host}}:{{port.dest}}
 {% endif %}
 {% endfor %}
 {% endfor %}
-HiddenServiceAuthorizeClient stealth {{service_group.name}}_client
+HiddenServiceAuthorizeClient stealth {{service_group.name}}_cli
 {% endfor %}
 
 {% if 'RELAY' in env %}
@@ -18,9 +18,11 @@ ORPort 9001
 {% endif %}
 
 {% if 'HOLE' in env %}
+SocksPort 9050
 {% else %}
 SocksPort 0
 {% endif %}
 
+ExitPolicy reject *:*
 
 # useless line for Jinja bug

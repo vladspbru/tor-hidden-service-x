@@ -1,0 +1,45 @@
+version: "3.1"
+
+services:
+
+  hello:
+    image: tutum/hello-world
+    hostname: hello
+
+
+  tor:
+    image: vx/tor-hidden-service-x
+    build: .
+    restart: always
+    links:
+      - hello
+    environment:
+        # Set mapping ports
+        HELLO_PORTS: 88:80
+        # hello and again will share the same onion_adress
+        HELLO_SERVICE_NAME: foo
+
+        HOLE: 1 
+
+    # Keep keys in volumes
+    volumes:
+      - "./data/tor:/etc/tor"
+      - "./data/tor-keys/:/var/lib/tor/hidden_service/"
+      #- "tor-keys:/var/lib/tor/hidden_service/"
+
+    # Set secret for key, use the same name as the service
+    secrets:
+      - source: foo
+        target: foo
+        mode: 0400
+
+
+volumes:
+  chronograf:
+  tor-keys:
+     driver: local
+
+secrets:
+  foo:
+     file: "./foo_private_key"
+  
